@@ -1,0 +1,30 @@
+This software includes
+
+cluster-delegator
+Author Shaun Harker
+https://github.com/shaunharker/cluster-delegator
+
+CImg.h
+ #  Description     : The C++ Template Image Processing Toolkit.
+ #                    This file is the main component of the CImg Library project.
+ #                    ( http://cimg.sourceforge.net )
+ #
+ #  Project manager : David Tschumperle.
+ #                    ( http://www.greyc.ensicaen.fr/~dtschump/ )
+ #
+ #                    A complete list of contributors is available in file 'README.txt'
+ #                    distributed within the CImg package.
+ #
+ #  Licenses        : This file is 'dual-licensed', you have to choose one
+ #                    of the two licenses below to apply.
+ #
+ #                    CeCILL-C
+ #                    The CeCILL-C license is close to the GNU LGPL.
+ #                    ( http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html )
+ #
+ #                or  CeCILL v2.0
+ #                    The CeCILL license is compatible with the GNU GPL.
+ #                    ( http://www.cecill.info/licences/Licence_CeCILL_V2-en.html )
+
+
+
