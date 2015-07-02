@@ -65,7 +65,7 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	strcat(filePersistenceInv, fileTmp);
 
     char sOut[50];
-    sprintf(sOut, "Submitting persistence job %d...", job )
+    sprintf(sOut, "Submitting persistence job %d...", job );
     std::cout << sOut ;
 
 	CDataPersistence p;
@@ -73,7 +73,7 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	p.SavePersistenceDiagrams( filePersistence );
 	p.SavePersistenceDiagramsInvers( filePersistenceInv );
 
-    sprintf(sOut, "...persistence job %d submit!", job )
+    sprintf(sOut, "...persistence job %d submit!", job );
     std::cout << sOut ;
 
 }
