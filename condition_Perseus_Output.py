@@ -30,8 +30,8 @@ for fn in os.listdir(sDir):
                     p_point[0] = int(p_point[0]) - 1
                     p_point[1] = max(int(p_point[1]) - 1,-1)
                 if "UpDown" in sDir: # Process superlevel sets by subtracting one and taking 255 - x,y
-                    p_point[0] = int(p_point[0]) - 1
-                    p_point[1] = max(int(p_point[1]) - 1,-1)
+                    p_point[0] = int(p_point[0]) - 2
+                    p_point[1] = max(int(p_point[1]) - 2,-1)
                     p_point[0] = 255 - p_point[0]
                     if p_point[1] != -1:
                         p_point[1] = 255 - p_point[1]
