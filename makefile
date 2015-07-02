@@ -3,7 +3,7 @@
 HOMEDIR := /home/rll81
 CLUSTER := ../cluster-delegator
 BOOST := /home/sharker/work
-PERSISTENCE = ../perseus_4_beta
+PERSISTENCE := ../perseus_4_beta
 
 INCS := -I$(CLUSTER)/include/
 INCS += -I$(BOOST)/include/
@@ -21,10 +21,11 @@ CC := mpicxx
 CXX := mpicxx
 CXXFLAGS := -O3 -std=c++11 -ggdb $(INCS) -fpermissive
 LDFLAGS := $(LINKFLAGS)
+LDFLAGS += -Wl,-rpath,/home/sharker/work/lib
 LDLIBS := $(LINKLIBS)
 
 # additional modules to be linked with each program
-PARALLEL =  CDataPersistence.o ParallelPersistence.o
+PARALLEL :=  CDataPersistence.o ParallelPersistence.o
 
 BMPPers_directory: $(PARALLEL)
 	$(CC) $(LDFLAGS) $(PARALLEL) -o $@ $(LDLIBS)
