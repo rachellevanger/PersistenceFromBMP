@@ -64,10 +64,18 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	sprintf (fileTmp, "PD/UpDown/Diagrams/Out_%d", job);
 	strcat(filePersistenceInv, fileTmp);
 
+    char sOut[50];
+    sprintf(sOut, "Submitting persistence job %d...", job )
+    std::cout << sOut ;
+
 	CDataPersistence p;
 	p.LoadData( fileData );
 	p.SavePersistenceDiagrams( filePersistence );
 	p.SavePersistenceDiagramsInvers( filePersistenceInv );
+
+    sprintf(sOut, "...persistence job %d submit!", job )
+    std::cout << sOut ;
+
 }
 
 inline void Process::finalize ( void ) { }
