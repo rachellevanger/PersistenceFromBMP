@@ -18,4 +18,4 @@ outpath = options.output
 dirs = os.listdir(path)
 # This would print all the files and directories
 for f in dirs:
-   plotter(path, f,outpath)
+   plotter(path, f, outpath)
