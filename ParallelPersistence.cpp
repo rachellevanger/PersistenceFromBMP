@@ -35,19 +35,16 @@ inline void Process::initialize ( void ) {
     int superlevel = atoi(argv[6]); // Do superlevel sets?
     int isRadial = atoi(argv[7]); // Do radial persistence?
 
+    int center_x = 0;
+    int center_y = 0;
+    int radius = 0;
     if( isRadial ) {
         int center_x = atoi(argv[8]);
         int center_y = atoi(argv[9]);
         int radius = atoi(argv[10]);
     }
-    else {
-        int center_x = 0;
-        int center_y = 0;
-        int radius = 0;
-    }
 
-
-  // Prepare job messages and push them onto "JOBS_TO_SEND" stack.
+    // Prepare job messages and push them onto "JOBS_TO_SEND" stack.
   
 	for ( int j = filestart; j <= fileend ; ++ j ) {
       Message job_message;
@@ -76,7 +73,7 @@ inline void Process::work ( Message & result_message, const Message & job_messag
     int center_x;
     int center_y;
     int radius;
-    
+
 	job_message >> job;
 	job_message >> jobDir;
     job_message >> jobPattern;
