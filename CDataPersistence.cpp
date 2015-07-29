@@ -107,16 +107,17 @@ void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as, const
 		coords.resize( 2 );
 		for(unsigned int x = 0; x < data_size_x_; ++ x){
 			for(unsigned int y = 0; y < data_size_y_; ++ y){
-			/*Inster the cube if it is in the disk */
-			if( isRadial && ((x-center_x) * (x-center_x)  + (y-center_y) * (y-center_y) < radius*radius) ){
-				coords[ 0 ] =  x;
-				coords[ 1 ] =  y;
+				/*Inster the cube if it is in the disk */
+				if( isRadial && ((x-center_x) * (x-center_x)  + (y-center_y) * (y-center_y) < radius*radius) ){
+					coords[ 0 ] =  x;
+					coords[ 1 ] =  y;
+					cubical_complex.addTopCube( coords,  255 - data_[ x * data_size_y_ + y ]   );
+				}
+				else {
+					coords[ 0 ] =  x;
+					coords[ 1 ] =  y;
 				cubical_complex.addTopCube( coords,  255 - data_[ x * data_size_y_ + y ]   );
-			}
-			else {
-				coords[ 0 ] =  x;
-				coords[ 1 ] =  y;
-			cubical_complex.addTopCube( coords,  255 - data_[ x * data_size_y_ + y ]   );
+				}
 			}
 
         }
