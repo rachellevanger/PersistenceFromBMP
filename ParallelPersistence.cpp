@@ -69,6 +69,14 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	// Extract job information from "job" message
 	int job;
 	char jobDir[500];
+    char jobPattern[100];
+    int sublevel;
+    int superlevel;
+    int isRadial;
+    int center_x;
+    int center_y;
+    int radius;
+    
 	job_message >> job;
 	job_message >> jobDir;
     job_message >> jobPattern;
