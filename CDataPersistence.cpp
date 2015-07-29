@@ -57,7 +57,7 @@ void CDataPersistence::LoadData( const char* file_name ){
 	}
 }
 
-void CDataPersistence::SavePersistenceDiagrams( const char* save_as ){
+void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius ){
 	/*declare cubical data with integer chains and int births*/
 	DenseCToplex<int,int> cubical_complex;
 
@@ -75,15 +75,22 @@ void CDataPersistence::SavePersistenceDiagrams( const char* save_as ){
 	coords.resize( 2 );
 	for(unsigned int x = 0; x < data_size_x_; ++ x){
 		for(unsigned int y = 0; y < data_size_y_; ++ y){
-		/*Inster the cube if it is in the disk */
-		coords[ 0 ] =  x;
-		coords[ 1 ] =  y;
-		cubical_complex.addTopCube( coords,  data_[ x * data_size_y_ + y ]   );
+			/*Inster the cube if it is in the disk */
+			if( isRadial && ((x-center_x) * (x-center_x)  + (y-center_y) * (y-center_y) < radius*radius) ){
+				coords[ 0 ] =  x;
+				coords[ 1 ] =  y;
+				cubical_complex.addTopCube( coords,  data_[ x * data_size_y_ + y ]   );
+			}
+			else {
+				coords[ 0 ] =  x;
+				coords[ 1 ] =  y;
+			cubical_complex.addTopCube( coords,  data_[ x * data_size_y_ + y ]   );
+			}
 		}
 	}
 	cubical_complex.ComputePersistence( save_as);
 }
-void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as ){
+void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius ){
 	/*declare cubical datas et with integer chains and int births*/
 		DenseCToplex<int,int> cubical_complex;
 
@@ -101,11 +108,17 @@ void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as ){
 		for(unsigned int x = 0; x < data_size_x_; ++ x){
 			for(unsigned int y = 0; y < data_size_y_; ++ y){
 			/*Inster the cube if it is in the disk */
-			     coords[ 0 ] =  x;
-			     coords[ 1 ] =  y;
-			     cubical_complex.addTopCube( coords, 255 - data_[ x * data_size_y_ + y ]   );
-                
-            }
+			if( isRadial && ((x-center_x) * (x-center_x)  + (y-center_y) * (y-center_y) < radius*radius) ){
+				coords[ 0 ] =  x;
+				coords[ 1 ] =  y;
+				cubical_complex.addTopCube( coords,  255 - data_[ x * data_size_y_ + y ]   );
+			}
+			else {
+				coords[ 0 ] =  x;
+				coords[ 1 ] =  y;
+			cubical_complex.addTopCube( coords,  255 - data_[ x * data_size_y_ + y ]   );
+			}
+
         }
 		cubical_complex.ComputePersistence( save_as);
 }

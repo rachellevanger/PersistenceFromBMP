@@ -25,8 +25,8 @@ public:
 	virtual ~CDataPersistence();
 
 	void LoadData( const char* file_name );
-	void SavePersistenceDiagrams( const char* save_as );
-	void SavePersistenceDiagramsInvers( const char* save_as );
+	void SavePersistenceDiagrams( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius );
+	void SavePersistenceDiagramsInvers( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius  );
 };
 
 #endif /* CDATAPERSISTENCE_H_ */

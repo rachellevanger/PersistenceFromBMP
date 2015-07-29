@@ -14,6 +14,7 @@ def plotter(path, filename, out):
 	z = []
 	cnt = 1
 	read_file = open(f,'r')
+	print('File is read.')
 	for plot_pair in read_file:
 		if plot_pair.isspace():
 			continue
@@ -24,6 +25,7 @@ def plotter(path, filename, out):
 		x.append(int(xandy[0]))
 		y.append(int(xandy[1]))
 	z.append(cnt)
+
 	for i in range(0,len(a)-1):
 		if a[i] == a[i+1]:
 			cnt = cnt + 1
@@ -32,6 +34,9 @@ def plotter(path, filename, out):
 		else:
 			cnt = 1
 			z.append(cnt)
+
+
+	print('Points have been processed. Generating image.')
 	
 	colors = [float(s) for s in z]
 	plt.scatter([float(s) for s in x], [float(t) for t in y], c=colors, s=50.,cmap=cm.hot)
@@ -46,5 +51,8 @@ def plotter(path, filename, out):
 	plt.xlabel('Birth')
 	plt.ylabel('Death')
 	plt.title(r'$\beta_0$')
+	print("Saving to: " + str(out) + '/' + str(filename) + ".jpg")
 	savefig(str(out) + '/' + str(filename) + ".jpg")
 	plt.clf()
+
+	print('Done generating image.')
