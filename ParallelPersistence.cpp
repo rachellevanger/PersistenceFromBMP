@@ -50,10 +50,13 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	char fileData[500];
 	char filePersistence[500];
 	char filePersistenceInv[500];
-	char fileTmp[50];  
+	char fileTmp[500];  
+
+    	char sOut[50];
 
 	strcpy(fileData, jobDir);
-	sprintf (fileTmp, "height_functions/%d.bmp", job);
+	sprintf (fileTmp, "HeightFunctions/%d.bmp", job);
+	std::cout << fileTmp;
 	strcat(fileData, fileTmp);
 
 	strcpy(filePersistence, jobDir);
@@ -64,17 +67,16 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	sprintf (fileTmp, "PD/UpDown/Diagrams/Out_%d", job);
 	strcat(filePersistenceInv, fileTmp);
 
-    char sOut[50];
-    sprintf(sOut, "Submitting persistence job %d...", job );
-    std::cout << sOut ;
+    	sprintf(sOut, "Submitting persistence job %d...", job );
+    	std::cout << sOut ;
 
 	CDataPersistence p;
 	p.LoadData( fileData );
 	p.SavePersistenceDiagrams( filePersistence );
 	p.SavePersistenceDiagramsInvers( filePersistenceInv );
 
-    sprintf(sOut, "...persistence job %d submit!", job );
-    std::cout << sOut ;
+    	sprintf(sOut, "...persistence job %d submit!", job );
+    	std::cout << sOut ;
 
 }
 
