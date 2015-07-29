@@ -30,6 +30,7 @@ inline void Process::initialize ( void ) {
 	int fileend = atoi(argv[2]); // Ending integer for bitmaps
 	char jobDir[500];
 	strcpy(jobDir, argv[3]); // Directory containing the persistence diagrams/etc
+    char jobPattern[100];
     strcpy(jobPattern, argv[4]); // Pattern to find the height functions relative to jobDir
     int sublevel = atoi(argv[5]); // Do sublevel sets?
     int superlevel = atoi(argv[6]); // Do superlevel sets?
