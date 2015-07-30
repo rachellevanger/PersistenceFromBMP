@@ -96,7 +96,6 @@ inline void Process::work ( Message & result_message, const Message & job_messag
 	sprintf (fileTmp, jobPattern, job);
 	std::cout << fileTmp;
 	strcat(fileData, fileTmp);
-    std::cout << fileData;
 
     CDataPersistence p;
     p.LoadData( fileData );
@@ -105,7 +104,6 @@ inline void Process::work ( Message & result_message, const Message & job_messag
         strcpy(filePersistence, jobDir);
         sprintf (fileTmp, "/PD/DownUp/Diagrams/Out_%d", job);
         strcat(filePersistence, fileTmp);
-        std::cout << filePersistence;
         p.SavePersistenceDiagrams( filePersistence, isRadial, center_x, center_y, radius );
     }
 
@@ -113,7 +111,6 @@ inline void Process::work ( Message & result_message, const Message & job_messag
         strcpy(filePersistenceInv, jobDir);
         sprintf (fileTmp, "/PD/UpDown/Diagrams/Out_%d", job);
         strcat(filePersistenceInv, fileTmp);
-        std::cout << filePersistenceInv;
         p.SavePersistenceDiagramsInvers( filePersistenceInv, isRadial, center_x, center_y, radius );
     }
 
