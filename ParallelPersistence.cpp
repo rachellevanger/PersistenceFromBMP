@@ -45,6 +45,8 @@ inline void Process::initialize ( void ) {
         int radius = atoi(argv[10]);
     }
 
+    int filter = atoi(argv[11]) // Filter pixel values less than this amount.
+
     // Prepare job messages and push them onto "JOBS_TO_SEND" stack.
   
 	for ( int j = filestart; j <= fileend ; ++ j ) {
@@ -58,6 +60,7 @@ inline void Process::initialize ( void ) {
       job_message << center_x;
       job_message << center_y;
       job_message << radius;
+      job_message << filter;
       JOBS_TO_SEND . push ( job_message );
     }
   
@@ -74,6 +77,7 @@ inline void Process::work ( Message & result_message, const Message & job_messag
     int center_x;
     int center_y;
     int radius;
+    int filter;
 
 	job_message >> job;
 	job_message >> jobDir;
@@ -84,6 +88,7 @@ inline void Process::work ( Message & result_message, const Message & job_messag
     job_message >> center_x;
     job_message >> center_y;
     job_message >> radius;
+    job_message >> filter;
 
 	char fileData[500];
 	char filePersistence[500];
@@ -104,14 +109,14 @@ inline void Process::work ( Message & result_message, const Message & job_messag
         strcpy(filePersistence, jobDir);
         sprintf (fileTmp, "/PD/DownUp/Diagrams/Out_%d", job);
         strcat(filePersistence, fileTmp);
-        p.SavePersistenceDiagrams( filePersistence, isRadial, center_x, center_y, radius );
+        p.SavePersistenceDiagrams( filePersistence, isRadial, center_x, center_y, radius, filter );
     }
 
     if ( superlevel ) {
         strcpy(filePersistenceInv, jobDir);
         sprintf (fileTmp, "/PD/UpDown/Diagrams/Out_%d", job);
         strcat(filePersistenceInv, fileTmp);
-        p.SavePersistenceDiagramsInvers( filePersistenceInv, isRadial, center_x, center_y, radius );
+        p.SavePersistenceDiagramsInvers( filePersistenceInv, isRadial, center_x, center_y, radius, filter );
     }
 
 }
