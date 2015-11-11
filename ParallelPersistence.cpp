@@ -45,7 +45,7 @@ inline void Process::initialize ( void ) {
         int radius = atoi(argv[10]);
     }
 
-    int filter = atoi(argv[11]) // Filter pixel values less than this amount.
+    int filter = atoi(argv[11]); // Filter pixel values less than this amount.
 
     // Prepare job messages and push them onto "JOBS_TO_SEND" stack.
   
