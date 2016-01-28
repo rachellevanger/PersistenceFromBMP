@@ -7,10 +7,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <string>
+#include <cstring>
 
 
-using namespace std;
 
 
 /* main */
@@ -19,9 +18,9 @@ int main ( int argc, char * argv [] ) {
   int filestart = atoi(argv[1]); // Starting integer for bitmaps
   int fileend = atoi(argv[2]); // Ending integer for bitmaps
   char jobDir[500];
-  strcpy(jobDir, argv[3]); // Directory containing the persistence diagrams/etc
+  std::strcpy(jobDir, argv[3]); // Directory containing the persistence diagrams/etc
   char jobPattern[100];
-  strcpy(jobPattern, argv[4]); // Pattern to find the height functions relative to jobDir
+  std::strcpy(jobPattern, argv[4]); // Pattern to find the height functions relative to jobDir
   int sublevel = atoi(argv[5]); // Do sublevel sets?
   int superlevel = atoi(argv[6]); // Do superlevel sets?
   int isRadial = atoi(argv[7]); // Do radial persistence?
@@ -46,10 +45,10 @@ int main ( int argc, char * argv [] ) {
     char fileTmp[500];  
 
     // Make file name
-    strcpy(fileData, jobDir);
+    std::strcpy(fileData, jobDir);
     sprintf (fileTmp, jobPattern, j);
     std::cout << fileTmp;
-    strcat(fileData, fileTmp);
+    std::strcat(fileData, fileTmp);
 
     // Load data
     CDataPersistence p;
@@ -57,17 +56,17 @@ int main ( int argc, char * argv [] ) {
 
     // Submit sublevel sets
     if ( sublevel ) {
-        strcpy(filePersistence, jobDir);
+        std::strcpy(filePersistence, jobDir);
         sprintf (fileTmp, "/PD/DownUp/Diagrams/Out_%d", j);
-        strcat(filePersistence, fileTmp);
+        std::strcat(filePersistence, fileTmp);
         p.SavePersistenceDiagrams( filePersistence, isRadial, center_x, center_y, radius, filter );
     }
 
     // Submit superlevel sets
     if ( superlevel ) {
-        strcpy(filePersistenceInv, jobDir);
+        std::strcpy(filePersistenceInv, jobDir);
         sprintf (fileTmp, "/PD/UpDown/Diagrams/Out_%d", j);
-        strcat(filePersistenceInv, fileTmp);
+        std::strcat(filePersistenceInv, fileTmp);
         p.SavePersistenceDiagramsInvers( filePersistenceInv, isRadial, center_x, center_y, radius, filter );
     }
 
