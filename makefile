@@ -25,7 +25,7 @@ LDLIBS := $(LINKLIBS)
 # additional modules to be linked with each program
 PROCESSPERSISTENCE :=  CDataPersistence.o PersistenceHandler.o
 
-BMPPers_directory: $(PROCESSPERSISTENCE)
+BMPPersistence: $(PROCESSPERSISTENCE)
 	$(CC) $(LDFLAGS) $(PROCESSPERSISTENCE) -o $@ $(LDLIBS)
 
 clean:
