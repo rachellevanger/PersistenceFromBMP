@@ -1,11 +1,9 @@
 # makefile
 # directories where prerequisites can be found
 HOMEDIR := /home/rll81
-CLUSTER := ../cluster-delegator
-BOOST := /home/sharker/work
+BOOST := /usr/local
 PERSISTENCE := ../perseus_4_beta
 
-INCS := -I$(CLUSTER)/include/
 INCS += -I$(BOOST)/include/
 INCS += -I$(PERSISTENCE)/
 
@@ -21,15 +19,15 @@ CC := mpicxx
 CXX := mpicxx
 CXXFLAGS := -O3 -std=c++11 -ggdb $(INCS) -fpermissive
 LDFLAGS := $(LINKFLAGS)
-LDFLAGS += -Wl,-rpath,/home/sharker/work/lib
+LDFLAGS += -Wl,-rpath,/usr/local/lib
 LDLIBS := $(LINKLIBS)
 
 # additional modules to be linked with each program
-PARALLEL :=  CDataPersistence.o ParallelPersistence.o
+PROCESSPERSISTENCE :=  CDataPersistence.o PersistenceHandler.o
 
-BMPPers_directory: $(PARALLEL)
-	$(CC) $(LDFLAGS) $(PARALLEL) -o $@ $(LDLIBS)
+BMPPers_directory: $(PROCESSPERSISTENCE)
+	$(CC) $(LDFLAGS) $(PROCESSPERSISTENCE) -o $@ $(LDLIBS)
 
 clean:
 	rm *.o
-	rm BMPPers_directory
+	rm BMPPersistence
