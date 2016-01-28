@@ -10,6 +10,7 @@
 #include <string>
 
 
+using namespace std;
 
 
 /* main */
@@ -46,7 +47,7 @@ int main ( int argc, char * argv [] ) {
 
     // Make file name
     strcpy(fileData, jobDir);
-    sprintf (fileTmp, jobPattern, job);
+    sprintf (fileTmp, jobPattern, j);
     std::cout << fileTmp;
     strcat(fileData, fileTmp);
 
@@ -57,7 +58,7 @@ int main ( int argc, char * argv [] ) {
     // Submit sublevel sets
     if ( sublevel ) {
         strcpy(filePersistence, jobDir);
-        sprintf (fileTmp, "/PD/DownUp/Diagrams/Out_%d", job);
+        sprintf (fileTmp, "/PD/DownUp/Diagrams/Out_%d", j);
         strcat(filePersistence, fileTmp);
         p.SavePersistenceDiagrams( filePersistence, isRadial, center_x, center_y, radius, filter );
     }
@@ -65,7 +66,7 @@ int main ( int argc, char * argv [] ) {
     // Submit superlevel sets
     if ( superlevel ) {
         strcpy(filePersistenceInv, jobDir);
-        sprintf (fileTmp, "/PD/UpDown/Diagrams/Out_%d", job);
+        sprintf (fileTmp, "/PD/UpDown/Diagrams/Out_%d", j);
         strcat(filePersistenceInv, fileTmp);
         p.SavePersistenceDiagramsInvers( filePersistenceInv, isRadial, center_x, center_y, radius, filter );
     }
