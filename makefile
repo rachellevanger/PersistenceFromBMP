@@ -1,17 +1,17 @@
 # makefile
 # directories where prerequisites can be found
 HOMEDIR := /home/rll81
-BOOST := /usr/local
+#BOOST := /usr/local
 PERSISTENCE := ../perseus_4_beta
 
-INCS += -I$(BOOST)/include/
+#INCS += -I$(BOOST)/include/
 INCS += -I$(PERSISTENCE)/
 
 #libraries
-LINKFLAGS := -L$(BOOST)/lib
+#LINKFLAGS := -L$(BOOST)/lib
 #LINKFLAGS += -L$(GRAPHICS)/lib
 
-LINKLIBS := -lboost_serialization
+#LINKLIBS := -lboost_serialization
 LINKLIBS += -lX11
 
 # Variables "make" uses for implicit rules
