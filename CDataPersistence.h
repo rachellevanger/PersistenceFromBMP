@@ -25,8 +25,12 @@ public:
 	virtual ~CDataPersistence();
 
 	void LoadData( const char* file_name );
-	void SavePersistenceDiagrams( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius, const int filter );
-	void SavePersistenceDiagramsInvers( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius, const int filter  );
+	void SavePersistenceDiagrams( const char* save_as, const int filter, const int* mask );
+	void SavePersistenceDiagramsInvers( const char* save_as, const int filter, const int* mask  );
+
+  std::vector<num> const&
+  getDimensions ( void ) const;
+
 };
 
 #endif /* CDATAPERSISTENCE_H_ */

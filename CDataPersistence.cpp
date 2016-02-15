@@ -20,8 +20,6 @@
 #include "Algos/All.h"
 
 
-
-
 #include "CImg.h"
 
 using namespace cimg_library;
@@ -57,13 +55,21 @@ void CDataPersistence::LoadData( const char* file_name ){
 	}
 }
 
-void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius, const int filter ){
+std::vector<num> const& 
+getDimensions ( void ) const {
+	std::vector<num> dimensions;
+  dimensions.push_back ( data_size_x_ );
+  dimensions.push_back ( data_size_y_ );
+  return dimensions;
+}
+
+void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int filter, const int* mask ){
 	/*declare cubical data with integer chains and int births*/
 	DenseCToplex<int,int> cubical_complex;
 
 	/* define dimension of the image */
 	std::vector<num> dimensions;
-	dimensions.push_back( data_size_x_  );
+	dimensions.push_back( data_size_x_ );
 	dimensions.push_back( data_size_y_ );
 
 	/* initialize cubical complex with the given dimensions */
@@ -75,15 +81,16 @@ void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int i
 	coords.resize( 2 );
 	for(unsigned int x = 0; x < data_size_x_; ++ x){
 		for(unsigned int y = 0; y < data_size_y_; ++ y){
-			/*Inster the cube if it is in the disk */
-			if( isRadial && ((x-center_x) * (x-center_x)  + (y-center_y) * (y-center_y) < radius*radius) ){
+			// Process the mask and the filter
+			if( mask_ != NULL ){
 				coords[ 0 ] =  x;
 				coords[ 1 ] =  y;
-				if( data_[ x * data_size_y_ + y ] >= filter ){
+				if( (data_[ x * data_size_y_ + y ] >= filter) && ( mask[ x * data_size_y_ + y ] > 0 ) ){
 					cubical_complex.addTopCube( coords,  data_[ x * data_size_y_ + y ]   );
 				}
 			}
-			else {
+			else  // Only process the filter
+			{
 				coords[ 0 ] =  x;
 				coords[ 1 ] =  y;
 				if( data_[ x * data_size_y_ + y ] >= filter ){
@@ -94,13 +101,13 @@ void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int i
 	}
 	cubical_complex.ComputePersistence( save_as);
 }
-void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as, const int isRadial, const int center_x, const int center_y, const int radius, const int filter ){
+void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as, const int filter, const int* mask ){
 	/*declare cubical datas et with integer chains and int births*/
 		DenseCToplex<int,int> cubical_complex;
 
 		/* define dimension of the image */
 		std::vector<num> dimensions;
-		dimensions.push_back( data_size_x_  );
+		dimensions.push_back( data_size_x_ );
 		dimensions.push_back( data_size_y_ );
 
 		/* initialize cubical complex with the given dimensions */
@@ -111,19 +118,20 @@ void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as, const
 		coords.resize( 2 );
 		for(unsigned int x = 0; x < data_size_x_; ++ x){
 			for(unsigned int y = 0; y < data_size_y_; ++ y){
-				/*Inster the cube if it is in the disk */
-				if( isRadial && ((x-center_x) * (x-center_x)  + (y-center_y) * (y-center_y) < radius*radius) ){
+			  // Process the mask and the filter
+				if( mask_ != NULL ){
 					coords[ 0 ] =  x;
 					coords[ 1 ] =  y;
-					if( data_[ x * data_size_y_ + y ] >= filter ){
-						cubical_complex.addTopCube( coords,  data_[ x * data_size_y_ + y ]   );
+					if( (data_[ x * data_size_y_ + y ] >= filter) && ( mask[ x * data_size_y_ + y ] > 0 ) ){
+						cubical_complex.addTopCube( coords, 255 - data_[ x * data_size_y_ + y ]   );
 					}
 				}
-				else {
+				else // Only process the filter
+				{
 					coords[ 0 ] =  x;
 					coords[ 1 ] =  y;
 					if( data_[ x * data_size_y_ + y ] >= filter ){
-						cubical_complex.addTopCube( coords,  data_[ x * data_size_y_ + y ]   );
+						cubical_complex.addTopCube( coords, 255 - data_[ x * data_size_y_ + y ]   );
 					}
 				}
 			}

@@ -2,14 +2,18 @@
 #include <iostream>
 #include "CDataPersistence.h"
 
-
+#include <vector>
 #include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <stdexcept>
+#include <exception>
 
 
+int* mask_;
+std::vector<num> mask_dimensions_;
 
 
 /* main */
@@ -18,23 +22,38 @@ int main ( int argc, char * argv [] ) {
   int filestart = atoi(argv[1]); // Starting integer for bitmaps
   int fileend = atoi(argv[2]); // Ending integer for bitmaps
   char jobDir[500];
-  std::strcpy(jobDir, argv[3]); // Directory containing the persistence diagrams/etc
+  std::strcpy(jobDir, argv[3]); // Directory containing the bitmap images.
   char jobPattern[100];
   std::strcpy(jobPattern, argv[4]); // Pattern to find the height functions relative to jobDir
+
   int sublevel = atoi(argv[5]); // Do sublevel sets?
   int superlevel = atoi(argv[6]); // Do superlevel sets?
-  int isRadial = atoi(argv[7]); // Do radial persistence?
 
-  int center_x = 0;
-  int center_y = 0;
-  int radius = 0;
-  if( isRadial ) {
-      int center_x = atoi(argv[8]);
-      int center_y = atoi(argv[9]);
-      int radius = atoi(argv[10]);
+  int filter = atoi(argv[7]); // Filter pixels (strictly) less than this value, 0 for no filter.
+
+  char jobMask[500];
+  mask_ = NULL;
+
+  if ( argc == 9) {
+    std::strcopy(jobMask, argv[8]); // Image mask path
+    CImg<int> image( jobMask );
+    int mask_size_x_ = image . width( ) ;
+    int mask_size_y_ = image . height( ) ;
+
+    mask_dimensions_.push_back ( mask_size_x_ );
+    mask_dimensions_.push_back ( mask_size_y );
+
+    /* Allocate memory for image data */
+    mask_ = new int[ mask_size_x_ * mask_size_y_ ];
+    /* Load the data from the first channel of the  image */
+    for(unsigned int x = 0; x < mask_size_x_; ++ x){
+      for(unsigned int y = 0; y < mask_size_y_; ++ y){
+        mask_[ x * mask_size_y_ + y ] = image( x, y, 0, 1);
+      }
+    }
+
   }
-
-  int filter = atoi(argv[11]); // Filter pixel values less than this amount.
+  
 
   // Go through each of the bitmap files and submit the persistence jobs.
   for ( int j = filestart; j <= fileend ; ++ j ) {
@@ -54,12 +73,20 @@ int main ( int argc, char * argv [] ) {
     CDataPersistence p;
     p.LoadData( fileData );
 
+    // Check data size against mask size if mask is not a null pointer
+    if ( mask_ != NULL ) {
+      if ( p.getDimensions != mask_dimensions_ ) {
+        std::cout << "Mask size does not match image size. Image=" << fileData << "\n";
+        throw std::runtime_error("Mask size does not match image size. Image=" + fileData);
+      }
+    }
+
     // Submit sublevel sets
     if ( sublevel ) {
         std::strcpy(filePersistence, jobDir);
         sprintf (fileTmp, "/PD/DownUp/Diagrams/Out_%d", j);
         std::strcat(filePersistence, fileTmp);
-        p.SavePersistenceDiagrams( filePersistence, isRadial, center_x, center_y, radius, filter );
+        p.SavePersistenceDiagrams( filePersistence, filter, mask_ );
     }
 
     // Submit superlevel sets
@@ -67,7 +94,7 @@ int main ( int argc, char * argv [] ) {
         std::strcpy(filePersistenceInv, jobDir);
         sprintf (fileTmp, "/PD/UpDown/Diagrams/Out_%d", j);
         std::strcat(filePersistenceInv, fileTmp);
-        p.SavePersistenceDiagramsInvers( filePersistenceInv, isRadial, center_x, center_y, radius, filter );
+        p.SavePersistenceDiagramsInvers( filePersistenceInv, filter, mask_ );
     }
 
   }
