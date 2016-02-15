@@ -55,12 +55,11 @@ void CDataPersistence::LoadData( const char* file_name ){
 	}
 }
 
-std::vector<int> const& 
-getDimensions ( void ) const {
+std::vector<int> CDataPersistence::getDimensions ( void ) {
 	std::vector<int> dimensions;
-  dimensions.push_back ( data_size_x_ );
-  dimensions.push_back ( data_size_y_ );
-  return dimensions;
+  	dimensions.push_back ( data_size_x_ );
+  	dimensions.push_back ( data_size_y_ );
+  	return dimensions;
 }
 
 void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int filter, const int* mask ){
@@ -77,12 +76,12 @@ void CDataPersistence::SavePersistenceDiagrams( const char* save_as, const int f
 
 	/* Load cubes (in the disk given by the experimental domain ) from the data_ */
 
-	vector<num> coords;
+	std::vector<num> coords;
 	coords.resize( 2 );
 	for(unsigned int x = 0; x < data_size_x_; ++ x){
 		for(unsigned int y = 0; y < data_size_y_; ++ y){
 			// Process the mask and the filter
-			if( mask_ != NULL ){
+			if( mask != NULL ){
 				coords[ 0 ] =  x;
 				coords[ 1 ] =  y;
 				if( (data_[ x * data_size_y_ + y ] >= filter) && ( mask[ x * data_size_y_ + y ] > 0 ) ){
@@ -114,12 +113,12 @@ void CDataPersistence::SavePersistenceDiagramsInvers( const char* save_as, const
 		cubical_complex.Init(dimensions);
 
 		/* Load inverse cubes from the data_ */
-		vector<num> coords;
+		std::vector<num> coords;
 		coords.resize( 2 );
 		for(unsigned int x = 0; x < data_size_x_; ++ x){
 			for(unsigned int y = 0; y < data_size_y_; ++ y){
 			  // Process the mask and the filter
-				if( mask_ != NULL ){
+				if( mask != NULL ){
 					coords[ 0 ] =  x;
 					coords[ 1 ] =  y;
 					if( (data_[ x * data_size_y_ + y ] >= filter) && ( mask[ x * data_size_y_ + y ] > 0 ) ){

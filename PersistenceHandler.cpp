@@ -3,18 +3,18 @@
 #include "CDataPersistence.h"
 
 #include <vector>
-#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <cstring>
 #include <stdexcept>
 #include <exception>
 
+#include <string>
+#include <algorithm>
 
-int* mask_;
-std::vector<num> mask_dimensions_;
+#include "CImg.h"
 
+using namespace cimg_library;
 
 /* main */
 int main ( int argc, char * argv [] ) {
@@ -32,23 +32,25 @@ int main ( int argc, char * argv [] ) {
   int filter = atoi(argv[7]); // Filter pixels (strictly) less than this value, 0 for no filter.
 
   char jobMask[500];
+  int* mask_;
+  std::vector<int> mask_dimensions_;
   mask_ = NULL;
 
   if ( argc == 9) {
-    std::strcopy(jobMask, argv[8]); // Image mask path
+    std::strcpy(jobMask, argv[8]); // Image mask path
     CImg<int> image( jobMask );
-    int mask_size_x_ = image . width( ) ;
-    int mask_size_y_ = image . height( ) ;
+    int mask_size_x = image . width( ) ;
+    int mask_size_y = image . height( ) ;
 
-    mask_dimensions_.push_back ( mask_size_x_ );
+    mask_dimensions_.push_back ( mask_size_x );
     mask_dimensions_.push_back ( mask_size_y );
 
     /* Allocate memory for image data */
-    mask_ = new int[ mask_size_x_ * mask_size_y_ ];
+    mask_ = new int[ mask_size_x * mask_size_y ];
     /* Load the data from the first channel of the  image */
-    for(unsigned int x = 0; x < mask_size_x_; ++ x){
-      for(unsigned int y = 0; y < mask_size_y_; ++ y){
-        mask_[ x * mask_size_y_ + y ] = image( x, y, 0, 1);
+    for(unsigned int x = 0; x < mask_size_x; ++ x){
+      for(unsigned int y = 0; y < mask_size_y; ++ y){
+        mask_[ x * mask_size_y + y ] = image( x, y, 0, 1);
       }
     }
 
@@ -75,9 +77,9 @@ int main ( int argc, char * argv [] ) {
 
     // Check data size against mask size if mask is not a null pointer
     if ( mask_ != NULL ) {
-      if ( p.getDimensions != mask_dimensions_ ) {
+      if ( p.getDimensions() != mask_dimensions_ ) {
         std::cout << "Mask size does not match image size. Image=" << fileData << "\n";
-        throw std::runtime_error("Mask size does not match image size. Image=" + fileData);
+        throw std::runtime_error("Mask size does not match image size.");
       }
     }
 

@@ -23,7 +23,6 @@ private:
 	unsigned int data_size_x_;
 	unsigned int data_size_y_;
 
-
 public:
 	CDataPersistence();
 	virtual ~CDataPersistence();
@@ -32,8 +31,7 @@ public:
 	void SavePersistenceDiagrams( const char* save_as, const int filter, const int* mask );
 	void SavePersistenceDiagramsInvers( const char* save_as, const int filter, const int* mask  );
 
-  std::vector<int> const&
-  getDimensions ( void ) const;
+	std::vector<int> getDimensions ( void );
 
 };
 
