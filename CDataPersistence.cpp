@@ -55,9 +55,9 @@ void CDataPersistence::LoadData( const char* file_name ){
 	}
 }
 
-std::vector<num> const& 
+std::vector<int> const& 
 getDimensions ( void ) const {
-	std::vector<num> dimensions;
+	std::vector<int> dimensions;
   dimensions.push_back ( data_size_x_ );
   dimensions.push_back ( data_size_y_ );
   return dimensions;

@@ -5,6 +5,10 @@
  *      Author: miro
  */
 
+
+#include <iostream>
+#include <vector>
+
 #ifndef CDATAPERSISTENCE_H_
 #define CDATAPERSISTENCE_H_
 
@@ -28,7 +32,7 @@ public:
 	void SavePersistenceDiagrams( const char* save_as, const int filter, const int* mask );
 	void SavePersistenceDiagramsInvers( const char* save_as, const int filter, const int* mask  );
 
-  std::vector<num> const&
+  std::vector<int> const&
   getDimensions ( void ) const;
 
 };
