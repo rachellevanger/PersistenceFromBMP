@@ -34,7 +34,7 @@ Arguments to the executable BMPPersistence are as follows:
 - sublevel // Do sublevel sets? (0, 1)
 - superlevel // Do superlevel sets? (0, 1)
 - filter // Filter pixel values less than this amount. Set to 0 for no filtering.
-- mask // A mask image (bmp) that is 0 for pixels to filter out, nonzero otherwise
+- mask (optional) // A mask image (bmp) that is 0 for pixels to filter out, nonzero otherwise
 
 Example: ./BMPPersistence 1 200 /data/ bmps/%05d.bmp 1 1 0 /data/img_mask.bmp
 
