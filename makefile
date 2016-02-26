@@ -1,7 +1,7 @@
 # makefile
 # directories where prerequisites can be found
 HOMEDIR := ~/
-PERSISTENCE := ../perseus_4_fixed
+PERSISTENCE := ../perseus_4_beta
 
 INCS += -I$(PERSISTENCE)/
 
