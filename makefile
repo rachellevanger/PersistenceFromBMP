@@ -12,7 +12,7 @@ LINKLIBS += -lX11
 # Variables "make" uses for implicit rules
 CXX := g++
 CXXFLAGS := -O3 -std=c++11 -ggdb $(INCS) -fpermissive
-LDFLAGS := $(LINKFLAGS)
+LDFLAGS := $(LINKFLAGS) -pthread -lpthread
 LDFLAGS += -Wl,-rpath,/usr/local/lib
 LDLIBS := $(LINKLIBS)
 
